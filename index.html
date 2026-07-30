@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="BOOM BINGO — Ethiopian real-time 75-ball multiplayer bingo for Telegram Mini Apps."
+    />
+    <meta name="author" content="BOOM BINGO" />
+    <title>BOOM BINGO</title>
+    <script>
+      // Polyfill for Node.js AsyncLocalStorage in browser environment
+      // This prevents errors from @tanstack/start-storage-context
+      if (typeof globalThis !== "undefined" && !globalThis.AsyncLocalStorage) {
+        class AsyncLocalStorage {
+          run(callback) {
+            return callback();
+          }
+          getStore() {
+            return undefined;
+          }
+          enterWith() {}
+          exit() {}
+          disable() {}
+        }
+        globalThis.AsyncLocalStorage = AsyncLocalStorage;
+
+        // Also create node:async_hooks compatibility
+        if (!globalThis["node:async_hooks"]) {
+          globalThis["node:async_hooks"] = { AsyncLocalStorage };
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/client.tsx"></script>
+  </body>
+</html>
